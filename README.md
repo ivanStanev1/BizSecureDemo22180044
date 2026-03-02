@@ -4,7 +4,7 @@
 Този проект демонстрира основни механизми за идентифициране и коригиране на уязвимости в ASP.NET Core MVC среда.
 
 ## Технологичен стек
-* *Framework:* .NET 8 / ASP.NET Core MVC
+* *Framework:* .NET 10 / ASP.NET Core MVC
 * *ORM:* Entity Framework Core
 * *Database:* Microsoft SQL Server (LocalDB)
 * *Authentication:* Cookie-based Authentication
