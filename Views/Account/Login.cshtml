@@ -1,0 +1,74 @@
+﻿@model BizSecureDemo22180044.ViewModels.LoginVm
+@{
+    ViewData["Title"] = "Вход в системата";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card p-4 shadow border-0">
+            <h3 class="text-center mb-4">Добре дошли</h3>
+
+            <form asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Имейл</label>
+                    <input class="form-control" asp-for="Email" placeholder="Въведи имейл..." />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Парола</label>
+                    <div class="input-group">
+                        <input class="form-control" asp-for="Password" type="password" id="passwordField" placeholder="Въведи парола..." />
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger py-2 small">
+                        @foreach (var e in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <div>@e.ErrorMessage</div>
+                        }
+                    </div>
+                }
+
+                <button class="btn btn-success btn-lg w-100 mb-3" type="submit">Влез</button>
+            </form>
+
+            <div class="text-center">
+                <span class="text-muted">Нямате акаунт?</span>
+                <a class="text-decoration-none" asp-action="Register">Регистрирайте се тук</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById('togglePassword');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function () {
+                const passwordField = document.getElementById('passwordField');
+                const icon = this.querySelector('i');
+
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                }
+            });
+        }
+    });
+</script>

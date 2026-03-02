@@ -1,0 +1,43 @@
+﻿@model BizSecureDemo22180044.ViewModels.RegisterVm
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 shadow-sm border-0">
+            <h3 class="text-center mb-4 text-primary">Създай акаунт</h3>
+
+            <form asp-action="Register" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Имейл адрес</label>
+                    <input class="form-control form-control-lg" asp-for="Email" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Парола</label>
+                    <input class="form-control form-control-lg" asp-for="Password" type="password" placeholder="Минимум 6 символа" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="text-danger mb-3 small">
+                    @foreach (var e in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <div class="alert alert-danger py-1 px-2">@e.ErrorMessage</div>
+                    }
+                </div>
+
+                <button class="btn btn-primary btn-lg w-100 shadow-sm" type="submit">Регистрирай ме</button>
+            </form>
+
+            <hr class="my-4" />
+
+            <div class="text-center">
+                <a class="text-decoration-none" asp-action="Login">Вече имаш акаунт? Влез тук</a>
+            </div>
+        </div>
+    </div>
+</div>

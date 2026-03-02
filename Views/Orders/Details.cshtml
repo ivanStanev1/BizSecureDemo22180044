@@ -1,0 +1,30 @@
+﻿@model BizSecureDemo22180044.Models.Order
+
+@{
+    ViewData["Title"] = "Детайли на поръчка";
+}
+
+<div class="container mt-4">
+    <h1>Детайли за поръчка #@Model.Id</h1>
+
+    <div class="card p-4 shadow-sm mt-3">
+        <dl class="row">
+            <dt class="col-sm-3">ID на потребител:</dt>
+            <dd class="col-sm-9">@Model.UserId</dd>
+
+            <dt class="col-sm-3">Заглавие:</dt>
+            @*  *@
+            <dd class="col-sm-9 text-primary fw-bold">@Html.Raw(Model.Title)</dd>
+
+            <dt class="col-sm-3">Сума на поръчката:</dt>
+            <dd class="col-sm-9">@Model.Amount лв.</dd>
+
+            <dt class="col-sm-3">Дата:</dt>
+            <dd class="col-sm-9">@Model.CreatedAtUtc.ToLocalTime()</dd>
+        </dl>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">⬅️ Назад към списъка</a>
+    </div>
+</div>

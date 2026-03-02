@@ -1,0 +1,88 @@
+﻿@model IEnumerable<BizSecureDemo22180044.Models.Order>
+
+@{
+    ViewData["Title"] = "Начало";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h2>📦 Моите поръчки</h2>
+
+        @* ТОВА Е НОВИЯТ БУТОН ЗА СЪЗДАВАНЕ НА ПОРЪЧКА *@
+        <a asp-controller="Orders" asp-action="Create" class="btn btn-success shadow-sm">
+            ➕ Създай нова поръчка
+        </a>
+    </div>
+    <hr />
+
+    <table class="table table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Заглавие</th>
+                <th>Сума</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.Amount лв.</td>
+                        <td>
+                            <a asp-controller="Orders" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Детайли</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted italic">Все още нямате създадени поръчки.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @* *@
+    <div class="card p-3 shadow-sm mt-5 bg-light border-warning">
+        <h5 class="text-dark border-bottom pb-2">🌍 Публичен регистър (Уязвим за IDOR)</h5>
+        @{
+            var allOrders = ViewBag.AllOrders as List<BizSecureDemo22180044.Models.Order>;
+        }
+        @if (allOrders == null || !allOrders.Any())
+        {
+            <div class="text-muted italic p-2">Няма записи в публичния регистър.</div>
+        }
+        else
+        {
+            <ul class="list-group list-group-flush mt-2">
+                @foreach (var o in allOrders)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent">
+                        <div>
+                            <span class="badge bg-secondary">#@o.Id</span>
+                            <span class="ms-2">@o.Title</span>
+                            <small class="text-muted ms-2">(Собственик ID: @o.UserId)</small>
+                        </div>
+
+                        <a class="btn btn-sm btn-outline-danger"
+                           asp-controller="Orders"
+                           asp-action="Details"
+                           asp-route-id="@o.Id">
+                            🔓 Хакни / Виж Детайли
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <footer class="mt-5 pt-3 border-top text-center text-muted">
+        <p>&copy; 2026 - Проект по сигурност на ФН: 22180044</p>
+    </footer>
+</div>
